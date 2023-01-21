@@ -109,7 +109,7 @@ module.exports.refreshToken = async (req, res, next) => {
     });
 
     //get the ref token from redis with the userid
-    const redisToken = await client.GET(String(user._id));
+    const redisToken = await client.get(String(user._id));
 
     //if there is no ref token in redis throwing err
     if (!redisToken)
@@ -134,7 +134,7 @@ module.exports.refreshToken = async (req, res, next) => {
         const refreshToken = await genRefreshToken(user);
 
         //saving the new refresh token to redis
-        await client.SET(String(user._id), refreshToken);
+        await client.set(String(user._id), refreshToken);
 
         //sending response to the client
         res
@@ -161,7 +161,7 @@ module.exports.logout = async (req, res, next) => {
     const {refToken,userId } = req.body
 
     //check the ref token present in redis
-    const redisToken = await client.GET(String(userId))
+    const redisToken = await client.get(String(userId))
 
     //if there is no ref token in redis throw err
     if(!redisToken) throw createError.Unauthorized("No token in redis")

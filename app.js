@@ -4,9 +4,9 @@ const connectDB = require("./helpers/mongo_init");
 const app = express();
 const PORT = process.env.PORT || 5000;
 const cors = require("cors")
-const {client} = require("./helpers/redis_init")
+// const {client} = require("./helpers/redis_init")
 
-client.connect()
+
 connectDB()
 
 
