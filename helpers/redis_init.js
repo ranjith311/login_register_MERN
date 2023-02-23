@@ -1,10 +1,7 @@
 const redis = require("redis");
 const Redis = require('ioredis');
 
-// const client = redis.createClient({
-//   port: 6379,
-//   host: "redis-12988.c305.ap-south-1-1.ec2.cloud.redislabs.com",
-// });
+
 const client = new Redis({
     host: process.env.REDIS_HOST,
     port: 12988,
