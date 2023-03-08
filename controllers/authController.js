@@ -68,8 +68,6 @@ module.exports.login = async (req, res, next) => {
 
     const session = req.session
     session.userId = user._id
-    console.log(session,"session from login controller")
-
 
 
     //sending response to the client
@@ -83,7 +81,7 @@ module.exports.login = async (req, res, next) => {
       })
       .json({ success: true, user, refreshToken });
   } catch (error) {
-    console.log(error);
+    
     next(error);
   }
 };
