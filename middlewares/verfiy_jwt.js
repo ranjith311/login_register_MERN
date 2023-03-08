@@ -3,9 +3,10 @@ const jwt  = require("jsonwebtoken")
 
 const verifyJwt =(req,res,next)=>{
     try {
-
+       
         //checking if the cookies found in header
         if(req.headers.cookie){
+            
 
             const cookies = req.headers.cookie.split(/[ =]+/)
 
@@ -14,8 +15,12 @@ const verifyJwt =(req,res,next)=>{
            
             //finding the index and accessing the authToken
             const index = cookies.indexOf("authToken")
-            const token = cookies[index+1]
+            let token = cookies[index+1]
 
+
+            if(token.endsWith(";")){
+                token = token.slice(0,-1)
+            }
 
             //verfiying authToken with jwt
             jwt.verify(token,process.env.JWT_AUTH_SECRET,(err,user)=>{
@@ -24,6 +29,9 @@ const verifyJwt =(req,res,next)=>{
                 //putting that user to request header to access in the protected route
                 req.user = user
 
+                //checking the user from session and jwt is the same or not
+                if(req.session.userId !== user._id) throw new createError.Unauthorized("session validation failed, invalid token")
+               
                 //go to next
                 next()
             })

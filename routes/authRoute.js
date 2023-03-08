@@ -2,6 +2,7 @@
 const router = require("express").Router()
 const { login, register, logout, profile, refreshToken } = require("../controllers/authController")
 const { regValidate, validate, logValidate } = require("../middlewares/formValidation")
+
 const { verifyJwt } = require("../middlewares/verfiy_jwt")
 
 

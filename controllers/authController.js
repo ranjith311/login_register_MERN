@@ -31,6 +31,8 @@ module.exports.register = async (req, res, next) => {
     const authToken = await genAccessToken(user);
     const refreshToken = await genRefreshToken(user);
 
+
+
     //sending response to the client
     res
       .status(200)
@@ -63,6 +65,12 @@ module.exports.login = async (req, res, next) => {
     //generate jwt and sent it to the client
     const authToken = await genAccessToken(user);
     const refreshToken = await genRefreshToken(user);
+
+    const session = req.session
+    session.userId = user._id
+    console.log(session,"session from login controller")
+
+
 
     //sending response to the client
     res
@@ -135,6 +143,7 @@ module.exports.refreshToken = async (req, res, next) => {
 
         //saving the new refresh token to redis
         await client.set(String(user._id), refreshToken);
+
 
         //sending response to the client
         res
